@@ -28,3 +28,18 @@ class Solution {
         return prev;
     }
 }
+
+
+//Recursive
+Link=> https://practice.geeksforgeeks.org/problems/reverse-a-linked-list/1/?track=DSASP-LinkedList&batchId=154
+
+Node reverseList(Node head)
+    {
+        if(head==null||head.next==null)return head;
+        
+        Node restHead=reverseList(head.next);
+        Node restTail=head.next;
+        restTail.next=head;
+        head.next=null;
+        return restHead;
+    }
