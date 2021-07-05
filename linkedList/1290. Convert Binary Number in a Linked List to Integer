@@ -1,0 +1,35 @@
+//1290. Convert Binary Number in a Linked List to Integer
+Link=> https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/
+
+Code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int getDecimalValue(ListNode head) {
+        ListNode curr=head;
+        String q="";
+        while(curr!=null){
+            q=q+String.valueOf(curr.val);
+            curr=curr.next;
+        }
+        int dec=0;
+        int pow=0;
+        for(int i=q.length()-1;i>-1;i--){
+            int r=Integer.parseInt(String.valueOf(q.charAt(i)));
+            if(r==1){
+                dec=dec+(int)Math.pow(2,pow);
+            }
+            pow++;
+        }
+        return dec;
+    }
+}
