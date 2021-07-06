@@ -1,0 +1,53 @@
+//234. Palindrome Linked List
+//Link=> https://leetcode.com/problems/palindrome-linked-list/
+
+Code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode tmp=mid(head);
+        tmp.next=rev(tmp.next);
+        ListNode curr=head;
+        tmp=tmp.next;
+        while(tmp!=null){
+            if(curr.val!=tmp.val){
+                return false;
+            }
+            tmp=tmp.next;
+            curr=curr.next;
+        }
+        return true;
+    }
+    public ListNode rev(ListNode head) {
+        if(head==null||head.next==null) return head;
+        
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr!=null){
+            ListNode next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    static ListNode mid(ListNode head) {
+		ListNode s = head;
+		ListNode f = head;
+		while (f.next != null && f.next.next != null) {
+			s = s.next;
+			f = f.next.next;
+		}
+		return s;
+	}
+}
