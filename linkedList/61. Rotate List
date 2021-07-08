@@ -1,0 +1,76 @@
+//61. Rotate List
+//Link=> https://leetcode.com/problems/rotate-list/
+
+//Code:
+
+//Brute force:(not acceptable)
+//time= O[k*n] space=O[1]
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head==null||head.next==null)return head;
+        int count=0;
+        while(count<k){
+            head=rotate(head);
+            count++;
+        }
+        return head;
+    }
+    ListNode rotate(ListNode head){
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr.next!=null){
+            prev=curr;
+            curr=curr.next;
+        }
+        ListNode dummy=new ListNode(curr.val,head);
+        prev.next=null;
+
+        return dummy;
+    }
+}
+
+//optimized:
+//time= O[n] space=O[1]
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head==null||head.next==null)return head;
+        int len=1;
+        ListNode lenCurr=head;
+        while(lenCurr.next!=null){
+            len++;
+            lenCurr=lenCurr.next;
+        }
+        if(k>len){
+            k=k%len;
+        }
+        int count=0;
+        while(count<k){
+            head=rotate(head);
+            count++;
+        }
+        return head;
+    }
+    ListNode rotate(ListNode head){
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr.next!=null){
+            prev=curr;
+            curr=curr.next;
+        }
+        ListNode dummy=new ListNode(curr.val,head);
+        prev.next=null;
+
+        return dummy;
+    }
+}
