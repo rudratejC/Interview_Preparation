@@ -1,0 +1,88 @@
+//138. Copy List with Random Pointer
+
+//Code:
+
+//    O[n] space and time  Using Hashing
+
+
+
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        HashMap<Node,Node> hm=new HashMap<Node,Node>();
+        for(Node curr=head;curr!=null;curr=curr.next)
+            hm.put(curr,new Node(curr.val));
+        for(Node curr=head;curr!=null;curr=curr.next){
+            Node cloneCurr=hm.get(curr);
+            cloneCurr.next=hm.get(curr.next);
+            cloneCurr.random=hm.get(curr.random);
+        }
+        return hm.get(head);
+    }
+}
+
+
+
+
+
+//  O[n] time,  O[1] space    w/o using hashing
+
+
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head==null)return head;
+        
+        Node curr=head;
+        while(curr!=null){
+            Node next=curr.next;
+            curr.next=new Node(curr.val);
+            curr.next.next=next;
+            curr=next;
+        }
+        curr=head;
+        while(curr!=null){
+            curr.next.random=(curr.random!=null)?(curr.random.next):null;
+            curr=curr.next.next;
+        }
+        Node real=head;
+        Node dummy=head.next;
+        Node dummyHead=dummy;
+        while(real!=null&&dummy!=null){
+            real.next=(real.next!=null)?real.next.next:real.next;
+            dummy.next=(dummy.next!=null)?dummy.next.next:dummy.next;
+            real=real.next;
+            dummy=dummy.next;
+        }
+        return dummyHead;
+    }
+    
+}
