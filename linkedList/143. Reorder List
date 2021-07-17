@@ -1,0 +1,83 @@
+//143. Reorder List
+
+//Code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        ListNode mid=getMid(head);
+        
+        ListNode curr=head;
+        while(curr!=mid)curr=curr.next;
+        
+        ListNode revHead=rev(curr.next);
+        curr.next=null;
+        
+        curr=head;
+        while(curr.next!=null){
+            ListNode next=curr.next;
+            ListNode revNext=revHead.next;
+            curr.next=revHead;
+            revHead.next=next;
+            revHead=revNext;
+            curr=next;
+        }
+        if(revHead!=null){
+            curr=head;
+            while(curr.next!=null)curr=curr.next;
+            curr.next=revHead;
+        }
+    }
+    
+    public ListNode getMid(ListNode head) {
+        if(head.next==null){
+            return head;
+        }
+        ListNode tmp=head;
+        int size=0,mid;
+        while(tmp!=null){
+            size++;
+            tmp=tmp.next;
+        }
+        int sz=size;
+        mid=(size/2)+1;
+        tmp=head;
+        size=0;
+        while(size!=(mid-1)){
+            size++;
+            tmp=tmp.next;
+        }
+        if(sz%2==0){
+            ListNode curr=head;
+            while(curr.next!=tmp)curr=curr.next;
+            
+            return curr;
+        }
+        return tmp;
+    }
+    
+    public ListNode rev(ListNode head) {
+        if(head==null||head.next==null) return head;
+        
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr!=null){
+            ListNode next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    
+    
+}
